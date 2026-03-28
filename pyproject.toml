@@ -1,0 +1,30 @@
+[build-system]
+requires = ['setuptools>=61.0']
+build-backend = 'setuptools.build_meta'
+
+
+[project]
+name = 'habit-tracker'
+version = '0.1.0'
+description = 'Habit tracker'
+requires-python = '>=3.13'
+authors = [
+    { name = 'Andrew Tunison' }
+]
+dependencies = []
+
+[tool.setuptools]
+packages = ['src']
+
+[tool.setuptools.package-data]
+tests = ['assets/*.sql']
+
+
+[tool.unittest]
+start-dir = 'tests'
+pattern = 'test_*.py'
+top-level-dir = '.'
+
+
+[tool.pytest.ini_options]
+testpaths = ['tests']
