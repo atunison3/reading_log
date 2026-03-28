@@ -52,7 +52,7 @@ CREATE TABLE books (
     focusId INTEGER,
     locationId INTEGER,
     ownerId INTEGER,
-    format TEXT CHECK (format IN ('hardcover', 'paperback', 'ebook', 'audiobook', 'pdf', 'other')),
+    bookFormat TEXT CHECK (bookFormat IN ('hardcover', 'paperback', 'ebook', 'audiobook', 'pdf', 'other')),
     
     -- Tracking status -- 
     readingStatus TEXT NOT NULL DEFAULT 'unread'
@@ -105,8 +105,6 @@ CREATE TABLE books (
 
 CREATE TABLE authors (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-
-    -- Display name (canonical)
     name TEXT GENERATED ALWAYS AS (
         lastName ||
         CASE 
@@ -120,25 +118,17 @@ CREATE TABLE authors (
     ) STORED
         CHECK (name != '')
         UNIQUE,
-
-    -- Optional structured components (useful but not required)
     firstName TEXT,
     middleName TEXT,
     lastName TEXT NOT NULL,
-
-    -- Optional metadata
     birthYear INTEGER CHECK (birthYear IS NULL OR birthYear BETWEEN 0 AND 3000),
     deathYear INTEGER CHECK (deathYear IS NULL OR deathYear BETWEEN 0 AND 3000),
-
     nationality TEXT,
     languageCode TEXT,
-    -- External identifiers (optional but useful if you ever sync data)
     openlibrary_id TEXT UNIQUE,
     goodreads_id TEXT UNIQUE,
-
     createdAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updatedAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
     isArchived INTEGER NOT NULL DEFAULT 0 CHECK (isArchived IN (0,1))
 ) STRICT;
 

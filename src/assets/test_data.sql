@@ -37,7 +37,7 @@ VALUES
     ('problem-solving', 'Books focused on problem-solving techniques, puzzles, and related topics.');
 
 INSERT INTO books 
-    (title, subtitle, isbn13, publisher, publicationYear, edition, genreId, languageCode, pageCount, currentPage, focusId, locationId, ownerId, format, readingStatus, startDate, planningStatus) 
+    (title, subtitle, isbn13, publisher, publicationYear, edition, genreId, languageCode, pageCount, currentPage, focusId, locationId, ownerId, bookFormat, readingStatus, startDate, planningStatus) 
 VALUES 
     ('Designing Data-Intensive Applications', 'The Big Ideas Behind Reliable, Scalable, and Maintainable Systems', '978-1-449-37332-0', 'O''Reilly Media', 2017, 1, 1, 'en', 552, 10, 1, 1, 1, 'hardcover', 'in progress', '2026-03-27', 'planned'),
     ('The Elements of Statistical Learning', 'Data Mining, Inference, and Prediction', '978-0-387-84858-7', 'Springer', 2009, 2, 1, 'en', 698, 0, 4, 1, 1, 'hardcover', 'unread', null, 'unplanned');
