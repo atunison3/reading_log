@@ -1,10 +1,10 @@
 from abc import ABC, abstractmethod
 from datetime import datetime
 
-from src.domain.book_author import BookAuthor
+from src.domain.entities.book_author import BookAuthor
 
 
-class BookRepositoryInterface(ABC):
+class BookAuthorRepositoryInterface(ABC):
     @abstractmethod
     def add(self, book_author: BookArthor) -> BookAuthor:
         raise NotImplementedError

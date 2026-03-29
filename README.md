@@ -25,6 +25,9 @@
 23. Track time spent reading in addition to pages read.
 24. Generate summaries of reading progress and notes over time.
 
+
+
+
 ### Library management use cases:
 
 1. Track ownership status: owned, borrowed, lent out, wish list, sold, donated, unknown.
@@ -34,7 +37,7 @@
 5. Track source/acquisition: bought from, date purchased, price paid, gift, library checkout, other. [implement later]
 
 ### Reading progress use cases:
-1. Track start date, finish date, abandon date, reread date, planned date.
+1. Track start date, end date, abandon date, planned date.
 2. Track current page and percent complete.
 3. Track reading status more precisely: unread, in progress, completed, abandoned, paused, planned.
 4. Track multiple reading sessions per day, not just one daily total.
@@ -51,9 +54,10 @@
 6. Reschedule, by pushing the finish date, when sessions are missed. (retain all previous schedules).
 7. Track original plan schedule and which shedule I am on (for that book). 
 8. Track whether the actual schedule aligns with the planned schedule. To be aligned, it must have the same finish date.
+9. Plan structured books based on skills/focus.
 
 ### Note-taking and research use cases:
-1. Attach notes to a book, chapter, page, or page range.
+1. Attach notes to a book, chapter, page, or page range. [to be developed]
 2. Tag notes by topic, such as philosophy, economics, ontology, or quote.
 3. Distinguish note types: summary, question, quote, research note, action item, vocabulary.
 4. Link questions to later answers.

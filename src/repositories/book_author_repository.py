@@ -1,0 +1,2 @@
+class BookAuthorRepository:
+    pass

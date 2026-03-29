@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from src.domain.author import Author
+from src.domain.entities.author import Author
 
 
 class AuthorRepositoryInterface(ABC):

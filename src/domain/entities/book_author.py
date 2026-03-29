@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pydantic import field_validator
 
-from src.domain.base_entity import BaseEntity
+from src.domain.entities.base_entity import BaseEntity
 
 
 class BookAuthor(BaseEntity):

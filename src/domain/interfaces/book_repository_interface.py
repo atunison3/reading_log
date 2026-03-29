@@ -1,12 +1,12 @@
 from abc import ABC, abstractmethod
 from datetime import datetime
 
-from src.domain.book import Book
+from src.domain.entities.book import Book
 
 
 class BookRepositoryInterface(ABC):
     @abstractmethod
-    def create_book(self, book: Book) -> Book:
+    def add(self, book: Book) -> Book:
         raise NotImplementedError
 
     @abstractmethod
@@ -26,5 +26,5 @@ class BookRepositoryInterface(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def archive(self, book_id: int) -> None:
+    def delete(self, book_id: int) -> None:
         raise NotImplementedError
