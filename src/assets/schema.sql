@@ -160,6 +160,7 @@ CREATE TABLE structuredReadingPlans (
         CHECK (isCurrent IN (0, 1)),
     focusId INTEGER,
     createdAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
     isArchived INTEGER NOT NULL DEFAULT 0
         CHECK (isArchived IN (0, 1)),
     FOREIGN KEY (bookId) REFERENCES books(id) ON DELETE CASCADE,
@@ -323,6 +324,7 @@ CREATE TABLE owners (
 ) STRICT;
 
 
+
 CREATE TABLE skills (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL UNIQUE
@@ -336,6 +338,7 @@ CREATE TABLE skills (
 ) STRICT;
 
 
+
 CREATE TABLE bookSkills (
     bookId INTEGER NOT NULL,
     skillId INTEGER NOT NULL,
@@ -345,6 +348,7 @@ CREATE TABLE bookSkills (
 ) STRICT;
 
 
+
 CREATE TABLE structuredReadingPlanSkills (
     structuredReadingPlanId INTEGER NOT NULL,
     skillId INTEGER NOT NULL,
@@ -352,6 +356,7 @@ CREATE TABLE structuredReadingPlanSkills (
     FOREIGN KEY (structuredReadingPlanId) REFERENCES structuredReadingPlan(id) ON DELETE CASCADE,
     FOREIGN KEY (skillId) REFERENCES skills(id) ON DELETE CASCADE
 ) STRICT;
+
 
 
 CREATE TABLE focuses (
@@ -365,6 +370,7 @@ CREATE TABLE focuses (
     isArchived INTEGER NOT NULL DEFAULT 0
         CHECK (isArchived IN (0, 1))
 ) STRICT;
+
 
 
 CREATE TABLE readingNotes (

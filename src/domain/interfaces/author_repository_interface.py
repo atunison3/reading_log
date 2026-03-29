@@ -12,7 +12,7 @@ class AuthorRepositoryInterface(ABC):
     def get_by_id(self, author_id: int) -> Author | None:
         raise NotImplementedError
 
-    @abstractmethod 
+    @abstractmethod
     def get_by_name(self, author_name: str) -> Author | None:
         raise NotImplementedError
 

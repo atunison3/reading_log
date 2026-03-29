@@ -26,19 +26,19 @@ class Book(BaseEntity):
     owner_id: int | None = None
     book_format: str | None = None
 
-    reading_status: str = 'unread'
+    reading_status: str = "unread"
     start_date: date | None = None
     end_date: date | None = None
     abandoned_date: date | None = None
-    planning_status: str = 'unplanned'
-    is_progressive: bool | None= True
+    planning_status: str = "unplanned"
+    is_progressive: bool | None = True
 
     rating_overall: float | None = None
 
     def __str__(self):
-        return f'{self.title}'
+        return f"{self.title}"
 
-    @field_validator('publication_year')
+    @field_validator("publication_year")
     @classmethod
     def validate_publication_year(cls, value: int | None) -> int | None:
         return cls.validate_publication_year_value(value)

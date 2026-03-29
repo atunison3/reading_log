@@ -1,3 +1,4 @@
 from .author_repository import AuthorRepository
-from .book_author_repository import BookAuthorRepository 
+from .book_author_repository import BookAuthorRepository
 from .book_repository import BookRepository
+from .structured_reading_plan_repository import StructuredReadingPlanRepository

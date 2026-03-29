@@ -4,13 +4,14 @@ from src.domain.entities import Author
 from src.domain.interfaces.author_repository_interface import AuthorRepositoryInterface
 from src.repositories.sqlite_repository import SQLiteRepository
 
+
 class AuthorRepository(AuthorRepositoryInterface, SQLiteRepository):
 
     def add(self, author: Author) -> int:
 
         conn = self._get_conn()
         cursor = conn.execute(
-            '''
+            """
             INSERT INTO authors (
                 firstName,
                 middleName,
@@ -22,7 +23,7 @@ class AuthorRepository(AuthorRepositoryInterface, SQLiteRepository):
                 goodreadsId
             )
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            ''',
+            """,
             (
                 author.first_name,
                 author.middle_name,
@@ -31,7 +32,7 @@ class AuthorRepository(AuthorRepositoryInterface, SQLiteRepository):
                 author.death_year,
                 author.nationality,
                 author.openlibrary_id,
-                author.goodreads_id
+                author.goodreads_id,
             ),
         )
 
@@ -43,7 +44,7 @@ class AuthorRepository(AuthorRepositoryInterface, SQLiteRepository):
 
         conn = self._get_conn()
         row = conn.execute(
-            '''
+            """
             SELECT
                 id, 
                 name, 
@@ -60,7 +61,7 @@ class AuthorRepository(AuthorRepositoryInterface, SQLiteRepository):
                 isArchived AS is_archived
             FROM authors
             WHERE id = ?
-            ''',
+            """,
             (author_id,),
         ).fetchone()
 
@@ -73,7 +74,7 @@ class AuthorRepository(AuthorRepositoryInterface, SQLiteRepository):
 
         conn = self._get_conn()
         row = conn.execute(
-            '''
+            """
             SELECT
                 id, 
                 name, 
@@ -90,7 +91,7 @@ class AuthorRepository(AuthorRepositoryInterface, SQLiteRepository):
                 isArchived AS is_archived
             FROM authors
             WHERE name = ?
-            ''',
+            """,
             (author_name,),
         ).fetchone()
 
@@ -103,7 +104,7 @@ class AuthorRepository(AuthorRepositoryInterface, SQLiteRepository):
 
         conn = self._get_conn()
         rows = conn.execute(
-            '''
+            """
             SELECT
                 id, 
                 name, 
@@ -120,18 +121,18 @@ class AuthorRepository(AuthorRepositoryInterface, SQLiteRepository):
                 isArchived AS is_archived
             FROM authors
             ORDER BY name
-            '''
+            """
         ).fetchall()
 
         return [Author(**dict(row)) for row in rows]
 
     def update(self, author: Author) -> None:
         if author.id is None:
-            raise ValueError('author.id is required for update')
+            raise ValueError("author.id is required for update")
 
         conn = self._get_conn()
         conn.execute(
-            '''
+            """
             UPDATE authors
             SET
                 firstName = ?,
@@ -144,7 +145,7 @@ class AuthorRepository(AuthorRepositoryInterface, SQLiteRepository):
                 goodreadsId = ?,
                 updatedAt = CURRENT_TIMESTAMP
             WHERE id = ?
-            ''',
+            """,
             (
                 author.first_name,
                 author.middle_name,
@@ -163,7 +164,10 @@ class AuthorRepository(AuthorRepositoryInterface, SQLiteRepository):
 
         conn = self._get_conn()
         conn.execute(
-            'UPDATE Authors SET isArchived = ? WHERE id = ?',
-            (1, author_id,),
+            "UPDATE Authors SET isArchived = ? WHERE id = ?",
+            (
+                1,
+                author_id,
+            ),
         )
         conn.commit()

@@ -4,13 +4,14 @@ from src.domain.entities.book import Book
 from src.domain.interfaces.book_repository_interface import BookRepositoryInterface
 from src.repositories.sqlite_repository import SQLiteRepository
 
+
 class BookRepository(BookRepositoryInterface, SQLiteRepository):
 
     def add(self, book: Book) -> int:
 
         conn = self._get_conn()
         cursor = conn.execute(
-            '''
+            """
             INSERT INTO books (
                 title,
                 subtitle,
@@ -37,7 +38,7 @@ class BookRepository(BookRepositoryInterface, SQLiteRepository):
                 ratingOverall
             )
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            ''',
+            """,
             (
                 book.title,
                 book.subtitle,
@@ -47,22 +48,22 @@ class BookRepository(BookRepositoryInterface, SQLiteRepository):
                 book.publication_year,
                 book.edition,
                 book.genre_id,
-                book.sub_genre, 
-                book.language_code, 
-                book.page_count, 
+                book.sub_genre,
+                book.language_code,
+                book.page_count,
                 book.current_page,
-                book.focus_id, 
-                book.location_id, 
-                book.owner_id, 
-                book.book_format, 
-                book.reading_status, 
-                book.start_date, 
-                book.end_date, 
-                book.abandoned_date, 
-                book.planning_status, 
-                book.is_progressive, 
-                book.rating_overall
-            )
+                book.focus_id,
+                book.location_id,
+                book.owner_id,
+                book.book_format,
+                book.reading_status,
+                book.start_date,
+                book.end_date,
+                book.abandoned_date,
+                book.planning_status,
+                book.is_progressive,
+                book.rating_overall,
+            ),
         )
 
         conn.commit()
@@ -72,7 +73,7 @@ class BookRepository(BookRepositoryInterface, SQLiteRepository):
     def get_by_id(self, book_id: int) -> Book | None:
         conn = self._get_conn()
         row = conn.execute(
-            '''
+            """
             SELECT
                 id,
                 title,
@@ -104,7 +105,7 @@ class BookRepository(BookRepositoryInterface, SQLiteRepository):
                 isArchived AS is_archived
             FROM books
             WHERE id = ?
-            ''',
+            """,
             (book_id,),
         ).fetchone()
 
@@ -116,11 +117,11 @@ class BookRepository(BookRepositoryInterface, SQLiteRepository):
         return Book(**dict(row))
 
     def get_by_title(self, title: str) -> Book:
-        '''Gets by title'''
+        """Gets by title"""
 
         conn = self._get_conn()
         row = conn.execute(
-                '''
+            """
                 SELECT
                     id,
                     title,
@@ -151,9 +152,9 @@ class BookRepository(BookRepositoryInterface, SQLiteRepository):
                 WHERE title = ?
                 ORDER BY edition DESC 
                 LIMIT 1
-                ''',
-                (title,),
-            ).fetchone()
+                """,
+            (title,),
+        ).fetchone()
 
         if row is None:
             return None
@@ -163,7 +164,7 @@ class BookRepository(BookRepositoryInterface, SQLiteRepository):
     def list_all(self) -> list[Book]:
         conn = self._get_conn()
         rows = conn.execute(
-                '''
+            """
                 SELECT
                     id,
                     title,
@@ -191,18 +192,18 @@ class BookRepository(BookRepositoryInterface, SQLiteRepository):
                     isProgressive AS is_progressive, 
                     ratingOverall AS rating_overall
                 FROM books
-                ''',
-            ).fetchall()
+                """,
+        ).fetchall()
 
         return [Book(**dict(row)) for row in rows]
 
     def update(self, book: Book) -> None:
         if book.id is None:
-            raise ValueError('book.id is required for update')
+            raise ValueError("book.id is required for update")
 
         conn = self._get_conn()
         conn.execute(
-            '''
+            """
             UPDATE books
             SET
                 title = ?,
@@ -230,7 +231,7 @@ class BookRepository(BookRepositoryInterface, SQLiteRepository):
                 ratingOverall = ?,
                 updatedAt = CURRENT_TIMESTAMP
             WHERE id = ?
-            ''',
+            """,
             (
                 book.title,
                 book.subtitle,
@@ -240,22 +241,22 @@ class BookRepository(BookRepositoryInterface, SQLiteRepository):
                 book.publication_year,
                 book.edition,
                 book.genre_id,
-                book.sub_genre, 
-                book.language_code, 
-                book.page_count, 
-                book.current_page, 
-                book.focus_id, 
-                book.location_id, 
-                book.owner_id, 
-                book.book_format, 
-                book.reading_status, 
-                book.start_date, 
-                book.end_date, 
-                book.abandoned_date, 
-                book.planning_status, 
-                book.is_progressive, 
+                book.sub_genre,
+                book.language_code,
+                book.page_count,
+                book.current_page,
+                book.focus_id,
+                book.location_id,
+                book.owner_id,
+                book.book_format,
+                book.reading_status,
+                book.start_date,
+                book.end_date,
+                book.abandoned_date,
+                book.planning_status,
+                book.is_progressive,
                 book.rating_overall,
-                book.id
+                book.id,
             ),
         )
         conn.commit()
@@ -264,7 +265,6 @@ class BookRepository(BookRepositoryInterface, SQLiteRepository):
 
         conn = self._get_conn()
         conn.execute(
-            'UPDATE books SET isArchived = ? WHERE id = ?'
-            (1, book_id),
+            "UPDATE books SET isArchived = ? WHERE id = ?"(1, book_id),
         )
         self.conn.commit()

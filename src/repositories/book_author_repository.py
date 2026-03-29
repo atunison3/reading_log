@@ -4,15 +4,14 @@ from src.domain.entities import BookAuthor
 from src.domain.interfaces import BookAuthorRepositoryInterface
 from src.repositories.sqlite_repository import SQLiteRepository
 
-class BookAuthorRepository(
-    BookAuthorRepositoryInterface, 
-    SQLiteRepository):
+
+class BookAuthorRepository(BookAuthorRepositoryInterface, SQLiteRepository):
 
     def add(self, book_author: BookAuthor) -> int:
 
         conn = self._get_conn()
         cursor = conn.execute(
-            '''
+            """
             INSERT INTO bookAuthors (
                 bookId, 
                 authorId, 
@@ -20,12 +19,12 @@ class BookAuthorRepository(
                 role
             )
             VALUES (?, ?, ?, ?)
-            ''',
+            """,
             (
                 book_author.book_id,
                 book_author.author_id,
                 book_author.author_order,
-                book_author.role
+                book_author.role,
             ),
         )
 
@@ -37,7 +36,7 @@ class BookAuthorRepository(
 
         conn = self._get_conn()
         row = conn.execute(
-            '''
+            """
             SELECT
                 id, 
                 bookId AS book_id, 
@@ -49,7 +48,7 @@ class BookAuthorRepository(
                 is_archived AS is_archived
             FROM bookAuthors
             WHERE id = ?
-            ''',
+            """,
             (book_author_id,),
         ).fetchone()
 
@@ -62,7 +61,7 @@ class BookAuthorRepository(
 
         conn = self._get_conn()
         rows = conn.execute(
-            '''
+            """
             SELECT
                 id, 
                 bookId AS book_id, 
@@ -75,7 +74,7 @@ class BookAuthorRepository(
             FROM bookAuthors
             WHERE bookId = ?
             ORDER BY authorOrder
-            ''',
+            """,
             (book_id,),
         ).fetchall()
 
@@ -88,7 +87,7 @@ class BookAuthorRepository(
 
         conn = self._get_conn()
         rows = conn.execute(
-            '''
+            """
             SELECT
                 id, 
                 bookId AS book_id, 
@@ -100,18 +99,18 @@ class BookAuthorRepository(
                 is_archived AS is_archived
             FROM authors
             ORDER BY bookId, authorOrder
-            '''
+            """
         ).fetchall()
 
         return [BookAuthor(**dict(row)) for row in rows]
 
     def update(self, book_author: BookAuthor) -> None:
         if author.id is None:
-            raise ValueError('author.id is required for update')
+            raise ValueError("author.id is required for update")
 
         conn = self._get_conn()
         conn.execute(
-            '''
+            """
             UPDATE bookAuthors
             SET
                 bookId = ?,
@@ -120,7 +119,7 @@ class BookAuthorRepository(
                 role = ?,
                 updatedAt = CURRENT_TIMESTAMP
             WHERE id = ?
-            ''',
+            """,
             (
                 author.book_id,
                 author.authorId,
@@ -135,7 +134,7 @@ class BookAuthorRepository(
 
         conn = self._get_conn()
         conn.execute(
-            'DELETE FROM bookAuthors WHERE id = ?',
+            "DELETE FROM bookAuthors WHERE id = ?",
             (book_author_id,),
         )
         conn.commit()
