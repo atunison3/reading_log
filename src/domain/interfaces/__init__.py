@@ -1,0 +1,3 @@
+from .author_repository_interface import AuthorRepositoryInterface
+from .book_author_repository_interface import BookAuthorRepositoryInterface
+from .book_repository_interface import BookRepositoryInterface

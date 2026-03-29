@@ -93,7 +93,7 @@ class TestReadingDatabase(unittest.TestCase):
         authors.sort(key = lambda x: x.name)
         print()
         for author in authors:
-            print(author)
+            print(author.id, author)
         print()
         self.assertEqual(len(authors), 5)
 
@@ -104,6 +104,38 @@ class TestReadingDatabase(unittest.TestCase):
         )
         author.id = author_repository.add(author)
         self.assertEqual(author.id, 6)
+
+        author = author_repository.get_by_name('Housley')
+        author.first_name = 'Matt'
+        author_repository.update(author)
+        author = author_repository.get_by_id(author.id)
+        self.assertEqual(author.name, 'Housley, Matt')
+
+        # Test BookAuthors
+        book_author_repository = BookAuthorRepository('test_database.db')
+        book_authors = book_author_repository.get_by_book_id(2)
+        authors = [author_repository.get_by_id(ba.author_id) for ba in book_authors]
+        self.assertEqual(len(book_authors), 3)
+
+
+        book_authors = [
+            BookAuthor(
+                book_id=3, 
+                author_id=6,  # Reis, Joe 
+                author_order=1
+            ),
+            BookAuthor(
+                book_id=3, 
+                author_id=5, # Housley, Matt 
+                author_order=2
+            )
+        ]
+        authors = [author_repository.get_by_id(ba.author_id) for ba in book_authors]
+        self.assertEqual(len(book_authors), 2)
+
+        print('\nFundamentals of Data Engineering by:')
+        for author in authors:
+            print(author)
 
 
 

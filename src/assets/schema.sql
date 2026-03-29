@@ -26,6 +26,7 @@ VALUES
     ('young-adult');
 
 
+
 CREATE TABLE books (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
@@ -103,6 +104,7 @@ CREATE TABLE books (
 ) STRICT;
 
 
+
 CREATE TABLE authors (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT GENERATED ALWAYS AS (
@@ -130,6 +132,7 @@ CREATE TABLE authors (
     updatedAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
     isArchived INTEGER NOT NULL DEFAULT 0 CHECK (isArchived IN (0,1))
 ) STRICT;
+
 
 
 CREATE TABLE structuredReadingPlans (
@@ -184,6 +187,7 @@ CREATE TABLE structuredReadingSessionPlans (
 ) STRICT;
 
 
+
 CREATE TABLE structuredReadingSessionActuals (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     structuredReadingPlanId INTEGER NOT NULL,
@@ -202,6 +206,7 @@ CREATE TABLE structuredReadingSessionActuals (
     updatedAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (structuredReadingPlanId) REFERENCES structuredReadingPlans(id) ON DELETE CASCADE
 ) STRICT;
+
 
 
 CREATE TABLE unstructuredReadingPlans (
@@ -235,6 +240,7 @@ CREATE TABLE unstructuredReadingPlans (
 ) STRICT;
 
 
+
 CREATE TABLE unstructuredReadingSessionActuals (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     unstructuredReadingPlanId INTEGER NOT NULL,
@@ -257,6 +263,7 @@ CREATE TABLE unstructuredReadingSessionActuals (
 ) STRICT;
 
 
+
 CREATE TABLE bookAuthors (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     bookId INTEGER NOT NULL,
@@ -267,9 +274,12 @@ CREATE TABLE bookAuthors (
         CHECK (role IN ('author', 'editor', 'translator', 'contributor', 'other')),
     createdAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updatedAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    isArchived INTEGER NOT NULL DEFAULT 0
+        CHECK (isArchived IN (0, 1)),
     FOREIGN KEY (bookId) REFERENCES books(id) ON DELETE CASCADE,
     FOREIGN KEY (authorId) REFERENCES authors(id) ON DELETE CASCADE
 ) STRICT;
+
 
 
 CREATE TABLE locations (

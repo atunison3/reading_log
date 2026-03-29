@@ -119,7 +119,7 @@ class AuthorRepository(AuthorRepositoryInterface, SQLiteRepository):
                 updatedAt AS updated_at, 
                 isArchived AS is_archived
             FROM authors
-            ORDER BY last_name, first_name
+            ORDER BY name
             '''
         ).fetchall()
 
@@ -142,7 +142,6 @@ class AuthorRepository(AuthorRepositoryInterface, SQLiteRepository):
                 nationality = ?,
                 openlibraryId = ?,
                 goodreadsId = ?,
-                isArchived = ?,
                 updatedAt = CURRENT_TIMESTAMP
             WHERE id = ?
             ''',
@@ -155,7 +154,6 @@ class AuthorRepository(AuthorRepositoryInterface, SQLiteRepository):
                 author.nationality,
                 author.openlibrary_id,
                 author.goodreads_id,
-                author.is_archived,
                 author.id,
             ),
         )
@@ -165,7 +163,7 @@ class AuthorRepository(AuthorRepositoryInterface, SQLiteRepository):
 
         conn = self._get_conn()
         conn.execute(
-            'DELETE FROM authors WHERE id = ?',
-            (author_id,),
+            'UPDATE Authors SET isArchived = ? WHERE id = ?',
+            (1, author_id,),
         )
         conn.commit()

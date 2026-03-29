@@ -8,13 +8,13 @@ class BaseEntity(BaseModel):
     id: int | None = None
     created_at: datetime | None = None 
     updated_at: datetime | None = None
-    isArchived: bool = False
+    is_archived: bool = False
 
-    @field_validator('isArchived')
+    @field_validator('is_archived')
     @classmethod
     def validate_is_archived(cls, value: int) -> int:
         if value not in (0, 1):
-            raise ValueError('isArchived must be 0 or 1')
+            raise ValueError('is_archived must be 0 or 1')
         return value
 
     @classmethod
